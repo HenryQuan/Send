@@ -12,7 +12,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+
+import fi.iki.elonen.NanoHTTPD;
+
 public class MainActivity extends AppCompatActivity {
+
+    private WebServer server = new WebServer(9587);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Start server
+        try {
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,5 +66,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.server.stop();
     }
 }
