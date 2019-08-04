@@ -20,31 +20,48 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WebServer server = new WebServer(9587);
+    private WebServer server = new WebServer(9587, "Hello World");;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        this.startServer("YES");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                server.setMessage("NDOSAIN");
+                                //startServer("no");
+                            }
+                        }).show();
             }
         });
+    }
 
+    private void startServer(String msg) {
+        if (server != null && server.isAlive()) {
+            server.shutdown();
+        }
+
+        server.setMessage(msg);
         // Start server
         try {
-            server.start();
+            server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
