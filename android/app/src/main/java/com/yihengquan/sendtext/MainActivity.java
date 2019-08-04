@@ -1,31 +1,34 @@
 package com.yihengquan.sendtext;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import fi.iki.elonen.NanoHTTPD;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WebServer server = new WebServer(9587, "Hello World");;
+    private final int port = 9587;
+    private WebServer server = new WebServer(port, "Hello World");;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        try {
+            // Start server
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Check if wifi is connected
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        if (wifi.isConnected()) {
+        final EditText input = findViewById(R.id.inputText);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                server.setMessage(input.getText().toString());
+            }
+        });
 
+        if (wifi.isConnected()) {
+            // Get device's IP address
+            WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            String ip = intToInetAddress(wm.getConnectionInfo().getIpAddress()).toString();
+            ip = ip.replace("/", "") + ':' + port;
+
+            TextView ipLabel = findViewById(R.id.idLabel);
+            ipLabel.setText(ip);
         } else {
             // Hotspot might work but I don't know
             new AlertDialog.Builder(this)
@@ -53,20 +79,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startServer(String msg) {
-        if (server != null && server.isAlive()) {
-            server.shutdown();
-        }
-
-        server.setMessage(msg);
-        // Start server
+    /**
+     * Convert ip address to a readable string
+     * From https://stackoverflow.com/questions/6064510/how-to-get-ip-address-of-the-device-from-code/54417079#54417079
+     * @param hostAddress
+     * @return
+     */
+    private InetAddress intToInetAddress(int hostAddress) {
+        byte[] addressBytes = { (byte)(0xff & hostAddress),
+                (byte)(0xff & (hostAddress >> 8)),
+                (byte)(0xff & (hostAddress >> 16)),
+                (byte)(0xff & (hostAddress >> 24)) };
         try {
-            server.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
-        } catch (IOException e) {
-            e.printStackTrace();
+            return InetAddress.getByAddress(addressBytes);
+        } catch (UnknownHostException e) {
+            throw new AssertionError();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
