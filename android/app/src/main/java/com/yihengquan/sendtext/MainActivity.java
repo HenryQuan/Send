@@ -1,5 +1,10 @@
 package com.yihengquan.sendtext;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,22 +35,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.startServer("YES");
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                server.setMessage("NDOSAIN");
-                                //startServer("no");
-                            }
-                        }).show();
-            }
-        });
+        if (wifi.isConnected()) {
+
+        } else {
+            // Hotspot might work but I don't know
+            new AlertDialog.Builder(this)
+            .setTitle("WiFi is not connected")
+            .setMessage("Please connect to the same network first")
+
+            // Specifying a listener allows you to take an action before dismissing the dialog.
+            // The dialog is automatically dismissed when a dialog button is clicked.
+            .setPositiveButton(android.R.string.ok, null)
+            .show();
+        }
     }
 
     private void startServer(String msg) {
