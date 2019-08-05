@@ -26,13 +26,17 @@
             android:text="Hello World!"
             android:textStyle="bold"
             android:id="@+id/idLabel" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:layout_marginBottom="190px"
-                android:text="123"
-                android:id="@+id/inputText" />
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Send Text"
+            android:onClick="sendText"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:focusedByDefault="true"
+            android:id="@+id/inputText" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.yihengquan.sendtext"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 10
         versionName "0.0.1"

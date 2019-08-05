@@ -1,12 +1,13 @@
 package com.yihengquan.sendtext;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,13 +18,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import fi.iki.elonen.NanoHTTPD;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,15 +46,6 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        final EditText input = findViewById(R.id.inputText);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                server.setMessage(input.getText().toString());
-            }
-        });
-
         if (wifi.isConnected()) {
             // Get device's IP address
             WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -71,12 +59,24 @@ public class MainActivity extends AppCompatActivity {
             new AlertDialog.Builder(this)
             .setTitle("WiFi is not connected")
             .setMessage("Please connect to the same network first")
-
+            .setCancelable(false)
             // Specifying a listener allows you to take an action before dismissing the dialog.
             // The dialog is automatically dismissed when a dialog button is clicked.
-            .setPositiveButton(android.R.string.ok, null)
+            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            })
             .show();
         }
+    }
+
+    public void sendText(View v) {
+        final EditText input = findViewById(R.id.inputText);
+        String msg = input.getText().toString();
+        System.out.println(msg);
+        this.server.setMessage(msg);
     }
 
     /**
