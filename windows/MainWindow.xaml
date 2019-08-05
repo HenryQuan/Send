@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SendText"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        WindowStartupLocation="CenterScreen"
+        Title="SendText" Height="310" Width="500" ResizeMode="NoResize">
+    <StackPanel>
+        <DockPanel Margin="8">
+            <TextBlock Text="Enter the IP address: " />
+            <TextBox x:Name="ipBox" />
+        </DockPanel>
+    </StackPanel>
 </Window>
