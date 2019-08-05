@@ -19,9 +19,17 @@ namespace SendText
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public string ipAddress { set; get; }
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void testBinding(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(ipAddress);
         }
     }
 }

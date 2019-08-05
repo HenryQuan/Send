@@ -10,7 +10,10 @@
     <StackPanel>
         <DockPanel Margin="8">
             <TextBlock Text="Enter the IP address: " />
-            <TextBox x:Name="ipBox" />
+            <TextBox x:Name="ipBox" Text="{Binding Path=ipAddress}"/>
         </DockPanel>
+        <Button Click="testBinding">
+            <TextBlock>Test binding</TextBlock>
+        </Button>
     </StackPanel>
 </Window>
