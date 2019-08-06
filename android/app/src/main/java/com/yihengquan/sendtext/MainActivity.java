@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
@@ -25,7 +27,7 @@ import java.net.UnknownHostException;
 public class MainActivity extends AppCompatActivity {
 
     private final int port = 9587;
-    private WebServer server = new WebServer(port, "Hello World");;
+    private WebServer server = new WebServer(port, "");;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Focus inputBox
+        TextView inputBox = findViewById(R.id.inputText);
+        inputBox.requestFocus();
 
         // Check if wifi is connected
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    finish();
+                finish();
                 }
             })
             .show();
@@ -123,5 +129,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         this.server.stop();
+    }
+
+    public void checkLocalhost(MenuItem item) {
+        Intent localhost = new Intent(Intent.ACTION_VIEW, Uri.parse("http://127.0.0.1:" + port));
+        startActivity(localhost);
     }
 }

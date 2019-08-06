@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:focusedByDefault="true"
             android:id="@+id/inputText" />
         <Button
             android:layout_height="wrap_content"

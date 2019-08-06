@@ -51,7 +51,7 @@ namespace SendText
                         string phone = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
                         phoneBox.Text = phone;
                         // Only copy when text changed
-                        if (phone != prev)
+                        if (!string.IsNullOrEmpty(phone) && phone != prev)
                         {
                             prev = phone;
                             Clipboard.SetText(phone);
