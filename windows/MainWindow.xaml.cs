@@ -24,6 +24,7 @@ namespace SendText
     {
         public string ipAddress { set; get; }
         private Timer timer;
+        private string prev = "";
 
         public MainWindow()
         {
@@ -49,7 +50,12 @@ namespace SendText
                         // From https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
                         string phone = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
                         phoneBox.Text = phone;
-                        Clipboard.SetText(phone);
+                        // Only copy when text changed
+                        if (phone != prev)
+                        {
+                            prev = phone;
+                            Clipboard.SetText(phone);
+                        }
                     }));
                 }
                 Properties.Settings.Default.ip_address = ipAddress;

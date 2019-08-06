@@ -8,15 +8,15 @@
         WindowStartupLocation="CenterScreen"
         Title="SendText" Height="310" Width="500" >
     <DockPanel Margin="8">
-        <StackPanel DockPanel.Dock="Top">
-            <DockPanel Margin="0,0,0,8">
-                <TextBlock Text="Enter the IP address: " />
-                <TextBox x:Name="ipBox" />
-            </DockPanel>
-            <Button Click="receiveText">
-                <TextBlock>RECEIVE TEXT</TextBlock>
+        <DockPanel DockPanel.Dock="Top" >
+            <TextBlock Text="Enter the IP address: " />
+            <TextBox x:Name="ipBox" />
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Button Click="receiveText" Margin="0,8,0,0">
+                <TextBlock><Run Text="RECEIVE TEXT"/></TextBlock>
             </Button>
         </StackPanel>
-        <TextBox DockPanel.Dock="Bottom" Margin="0,8,0,0" x:Name="phoneBox" IsReadOnly="True" TextWrapping="Wrap"/>
+        <TextBox x:Name="phoneBox"  Margin="0,8,0,0" IsReadOnly="True" TextWrapping="Wrap"/>
     </DockPanel>
 </Window>
