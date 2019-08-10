@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -46,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Focus inputBox
         TextView inputBox = findViewById(R.id.inputText);
-        inputBox.requestFocus();
+        if (inputBox.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
 
         // Check if wifi is connected
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -134,5 +137,10 @@ public class MainActivity extends AppCompatActivity {
     public void checkLocalhost(MenuItem item) {
         Intent localhost = new Intent(Intent.ACTION_VIEW, Uri.parse("http://127.0.0.1:" + port));
         startActivity(localhost);
+    }
+
+    public void gotoGitHub(MenuItem item) {
+        Intent github = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/HenryQuan/SendText"));
+        startActivity(github);
     }
 }
