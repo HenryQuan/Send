@@ -79,5 +79,10 @@ namespace SendText
                 timer.Enabled = false;
             }
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("SendText receives messages from your Android device");
+        }
     }
 }

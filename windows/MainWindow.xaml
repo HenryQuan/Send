@@ -7,16 +7,23 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="SendText" Height="310" Width="500" >
-    <DockPanel Margin="8">
-        <DockPanel DockPanel.Dock="Top" >
-            <TextBlock Text="Enter the IP address: " />
-            <TextBox x:Name="ipBox" />
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Check for update" />
+            <MenuItem Header="About" Click="About_Click"/>
+        </Menu>
+
+        <DockPanel Margin="8">
+            <DockPanel DockPanel.Dock="Top" >
+                <TextBlock Text="Enter the IP address: " />
+                <TextBox x:Name="ipBox" />
+            </DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button Click="receiveText" Margin="0,8,0,0">
+                    <TextBlock><Run Text="RECEIVE TEXT"/></TextBlock>
+                </Button>
+            </StackPanel>
+            <TextBox x:Name="phoneBox"  Margin="0,8,0,0" IsReadOnly="True" TextWrapping="Wrap"/>
         </DockPanel>
-        <StackPanel DockPanel.Dock="Bottom">
-            <Button Click="receiveText" Margin="0,8,0,0">
-                <TextBlock><Run Text="RECEIVE TEXT"/></TextBlock>
-            </Button>
-        </StackPanel>
-        <TextBox x:Name="phoneBox"  Margin="0,8,0,0" IsReadOnly="True" TextWrapping="Wrap"/>
     </DockPanel>
 </Window>
