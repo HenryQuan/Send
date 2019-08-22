@@ -8,6 +8,9 @@ Sometimes, I need to send messages to my friend in Chinese when I am playing Wor
 1. SendText won't work in certain networks (like university wifi) but home network should be fine (hotspot is ok as well). Maybe it is because of the firewall? but I am not really sure
 2. SendText only refreshes every 3 seconds so there might be some delay (but usually it is fine and you won't even notice it at all)
 
+# Screenshot
+![WPF](https://raw.githubusercontent.com/HenryQuan/SendText/master/screenshot.PNG)
+
 # Reference
 1. https://github.com/lopspower/AndroidWebServer
 2. https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
