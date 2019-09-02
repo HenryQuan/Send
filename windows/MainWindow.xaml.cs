@@ -20,12 +20,13 @@ namespace SendText
         public MainWindow()
         {
             InitializeComponent();
-            timer = new Timer();
-            timer.Elapsed += new ElapsedEventHandler(getTextFromPhone);
-            timer.Interval = 3000;
-            timer.Enabled = false;
             // Put IP address back
             ipBox.Text = Properties.Settings.Default.ip_address;
+
+            timer = new Timer();
+            timer.Elapsed += new ElapsedEventHandler(getTextFromPhone);
+            timer.Interval = 2000;
+            timer.Enabled = this.canReceiveText();
         }
 
         private void getTextFromPhone(object sender, ElapsedEventArgs e)
@@ -60,14 +61,20 @@ namespace SendText
 
         private void receiveText(object sender, RoutedEventArgs e)
         {
+            this.timer.Enabled = this.canReceiveText();
+        }
+
+        private bool canReceiveText()
+        {
             ipAddress = ipBox.Text;
             if (!string.IsNullOrEmpty(ipAddress))
             {
-                timer.Enabled = true;
+                startBtn.IsEnabled = false;
+                return true;
             }
             else
             {
-                timer.Enabled = false;
+                return false;
             }
         }
 

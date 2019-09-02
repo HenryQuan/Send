@@ -19,8 +19,8 @@
                 <TextBox x:Name="ipBox" />
             </DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Click="receiveText" Margin="0,8,0,0">
-                    <TextBlock><Run Text="RECEIVE TEXT"/></TextBlock>
+                <Button x:Name="startBtn" Click="receiveText" Margin="0,8,0,0">
+                    <TextBlock><Run Text="START"/></TextBlock>
                 </Button>
             </StackPanel>
             <TextBox x:Name="phoneBox"  Margin="0,8,0,0" IsReadOnly="True" TextWrapping="Wrap"/>
