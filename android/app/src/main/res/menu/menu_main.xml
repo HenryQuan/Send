@@ -14,4 +14,10 @@
         android:title="GitHub"
         app:showAsAction="never"
         android:onClick="gotoGitHub" />
+    <item
+        android:id="@+id/action_download"
+        android:orderInCategory="100"
+        android:title="SendText for PC"
+        app:showAsAction="never"
+        android:onClick="checkLocalhost" />
 </menu>
