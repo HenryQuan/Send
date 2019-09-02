@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace SendText
 {
@@ -80,9 +71,14 @@ namespace SendText
             }
         }
 
+        private void GitHub_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/HenryQuan/SendText/releases/latest");
+        }
+
         private void About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("SendText receives messages from your Android device");
+            MessageBox.Show("SendText receives messages from your Android device\nCheck out more here - https://github.com/HenryQuan/SendText/");
         }
     }
 }

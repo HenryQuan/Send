@@ -9,8 +9,8 @@
         Title="SendText" Height="310" Width="500" >
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Check for update" />
             <MenuItem Header="About" Click="About_Click"/>
+            <MenuItem Header="Latest release" Click="GitHub_Click" />
         </Menu>
 
         <DockPanel Margin="8">
