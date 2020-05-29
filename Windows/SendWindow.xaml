@@ -1,0 +1,20 @@
+﻿<Window x:Class="Send.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Send"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Send" Height="305" Width="556">
+    <DockPanel Margin="16">
+        <StackPanel Margin="0 0 0 8" DockPanel.Dock="Top">
+            <DockPanel Margin="0 0 0 8">
+                <TextBlock Text="IP Address " />
+                <TextBox Margin="8 0 0 0" />
+            </DockPanel>
+            <Slider />
+        </StackPanel>
+        <TextBox DockPanel.Dock="Bottom"/>
+    </DockPanel>
+</Window>
