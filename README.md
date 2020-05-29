@@ -1,6 +1,8 @@
 # SendText
 Send texts from your Android phone to your Windows computer in the same network. ~~This is also my first WPF program.~~
 
+***Currently, under reconstrcution***
+
 # Ultimate goal
 My ultimate goal is to send anything including text, images, files and even shortcuts on Windows and Mac with iOS and Android apps. 
 I might make the UI look like a simple chat just to keep a simple history. 
@@ -15,7 +17,7 @@ Sometimes, I need to send messages to my friend in Chinese when I am playing Wor
 2. SendText only refreshes every 3 seconds so there might be some delay (but usually it is fine and you won't even notice it at all)
 
 # Screenshot
-![WPF](https://raw.githubusercontent.com/HenryQuan/SendText/master/screenshot.PNG)
+![WPF](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/screenshot.PNG)
 
 # Reference
 1. https://github.com/lopspower/AndroidWebServer
