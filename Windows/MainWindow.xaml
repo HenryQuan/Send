@@ -14,10 +14,11 @@
             <MenuItem Header="How to use" />
             <MenuItem Header="Check for update" />
         </Menu>
-        <StackPanel Margin="16" DockPanel.Dock="Top">
+        <StackPanel Margin="16 8 16 16" DockPanel.Dock="Top">
+            <TextBlock TextAlignment="Center" Margin="0 0 0 8" FontSize="32" Name="statusText"/>
             <DockPanel Margin="0 0 0 8">
                 <TextBlock Text="IP Address " />
-                <TextBox Margin="8 0 0 0" />
+                <TextBox Margin="8 0 0 0" Name="ipBox"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Delay: 1000ms" Margin="0 0 8 0" Name="delayText" />
