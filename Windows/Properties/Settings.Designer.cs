@@ -22,5 +22,29 @@ namespace Send.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IP_Address {
+            get {
+                return ((string)(this["IP_Address"]));
+            }
+            set {
+                this["IP_Address"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double Delay_Value {
+            get {
+                return ((double)(this["Delay_Value"]));
+            }
+            set {
+                this["Delay_Value"] = value;
+            }
+        }
     }
 }

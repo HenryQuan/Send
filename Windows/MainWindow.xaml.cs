@@ -19,7 +19,6 @@ namespace Send
 
             // Setup view model
             viewModel = new MainViewModel();
-            viewModel.init();
             DataContext = viewModel;
         }
 

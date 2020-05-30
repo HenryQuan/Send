@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Send.Properties;
+using System.ComponentModel;
 using System.Windows.Media;
 
 namespace Send.Models
@@ -10,13 +11,15 @@ namespace Send.Models
         /// <summary>
         /// The default delay is 1s, 1000ms
         /// </summary>
-        private double delay = 10;
+        private double delay;
         public double delayValue
         {
             get { return delay; }
             set
             {
                 delay = value;
+                Settings.Default.Delay_Value = value;
+                Settings.Default.Save();
                 onChangeMany(new string[] { "delayMessage", "delayValue" });
             }
         }
@@ -70,6 +73,8 @@ namespace Send.Models
             set
             {
                 ipAddress = value;
+                Settings.Default.IP_Address = value;
+                Settings.Default.Save();
                 onChange("ipString");
             }
         }
@@ -96,12 +101,11 @@ namespace Send.Models
 
         #region Functions
 
-        /// <summary>
-        /// Load data from local and prepare everything
-        /// </summary>
-        public void init()
+        public MainViewModel()
         {
-
+            // Load data from Settings
+            ipAddress = Settings.Default.IP_Address;
+            delay = Settings.Default.Delay_Value;
         }
 
         #endregion
