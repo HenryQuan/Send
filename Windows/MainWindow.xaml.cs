@@ -35,6 +35,7 @@ namespace Send
             if (e.Key == Key.Return)
             {
                 Keyboard.ClearFocus();
+                viewModel.startListener();
             }
         }
 

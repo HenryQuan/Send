@@ -1,5 +1,7 @@
 ﻿using Send.Properties;
+using System;
 using System.ComponentModel;
+using System.Timers;
 using System.Windows.Media;
 
 namespace Send.Models
@@ -9,7 +11,7 @@ namespace Send.Models
         #region Fields with UI binding
 
         /// <summary>
-        /// The default delay is 1s, 1000ms
+        /// The default delay is 1s, 1000ms (remeber to x100 to make it ms)
         /// </summary>
         private double delay;
         public double delayValue
@@ -21,6 +23,9 @@ namespace Send.Models
                 Settings.Default.Delay_Value = value;
                 Settings.Default.Save();
                 onChangeMany(new string[] { "delayMessage", "delayValue" });
+
+                // Update timer interval
+                timer.Interval = value * 100;
             }
         }
         public string delayMessage
@@ -50,8 +55,8 @@ namespace Send.Models
         {
             get
             {
-                if (connected) return "CONNECTED";
-                return "NOT CONNECTED";
+                if (connected) return "ACTIVE";
+                return "NOT ACTIVE";
             }
         }
         public Brush statusBrush
@@ -99,6 +104,12 @@ namespace Send.Models
 
         #endregion
 
+        /// <summary>
+        /// This handles http rquest
+        /// </summary>
+        private Timer timer = new Timer();
+        private int counter = 0;
+
         #region Functions
 
         public MainViewModel()
@@ -106,6 +117,41 @@ namespace Send.Models
             // Load data from Settings
             ipAddress = Settings.Default.IP_Address;
             delay = Settings.Default.Delay_Value;
+
+            // Setup timer
+            timer.Elapsed += new ElapsedEventHandler(listen);
+            // Update timer interval
+            timer.Interval = delay * 100;
+            // Start listener if IP address is valid
+            startListener();
+        }
+
+        public void startListener()
+        {
+            timer.Enabled = validateIPAddress();
+        }
+
+        private void listen(object sender, ElapsedEventArgs e)
+        {
+            counter += 1;
+            Console.WriteLine(counter.ToString());
+        }
+
+        #endregion
+
+        #region Utils
+
+        /// <summary>
+        /// Check whether the IP Address is valid
+        /// </summary>
+        /// <returns></returns>
+        private bool validateIPAddress()
+        {
+            // Check if it is null
+            if (string.IsNullOrEmpty(ipAddress)) return false;
+            // IPv4 has . and iPv6 has :
+            if (ipAddress.Contains(".") || ipAddress.Contains(":")) return true;
+            return false;
         }
 
         #endregion
