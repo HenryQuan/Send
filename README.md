@@ -1,10 +1,10 @@
 # SendText
-Send texts from your Android phone to your Windows computer in the same network. ~~This is also my first WPF program.~~
+Send texts from your Android phone to your Windows computer in the same network.
 
 ***Currently, under reconstrcution***
 
 # Ultimate goal
-My ultimate goal is to send anything including text, images, files and even shortcuts on Windows and Mac with iOS and Android apps. 
+My ultimate goal is to send anything including text, images, files and even shortcuts (keystrokes) on Windows and Mac with iOS and Android apps. 
 I might make the UI look like a simple chat just to keep a simple history. 
 For the PC side, it will downloads files and images. It also displays text and has the option to copy it. 
 The shortcut feature can be really powerful because it could possibly replace a remote express keyboard or even a on-screen hotkey program. 
@@ -17,8 +17,8 @@ Sometimes, I need to send messages to my friend in Chinese when I am playing Wor
 2. SendText only refreshes every 3 seconds so there might be some delay (but usually it is fine and you won't even notice it at all)
 
 # Screenshot
-![The original](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/screenshot.PNG)
-![Work in progress](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/WIP.JPG)
+![The original](https://raw.githubusercontent.com/HenryQuan/Send/master/extra/screenshot.PNG)
+![Work in progress](https://raw.githubusercontent.com/HenryQuan/Send/master/extra/WIP.JPG)
 
 # Reference
 1. https://github.com/lopspower/AndroidWebServer
