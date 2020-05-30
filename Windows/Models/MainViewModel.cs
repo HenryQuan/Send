@@ -1,6 +1,9 @@
 ﻿using Send.Properties;
 using System;
 using System.ComponentModel;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows.Media;
 
@@ -108,7 +111,11 @@ namespace Send.Models
         /// This handles http rquest
         /// </summary>
         private Timer timer = new Timer();
-        private int counter = 0;
+
+        /// <summary>
+        /// This save the previous message to prevent duplications over time
+        /// </summary>
+        private string previousMessage = "";
 
         #region Functions
 
@@ -128,13 +135,33 @@ namespace Send.Models
 
         public void startListener()
         {
-            timer.Enabled = validateIPAddress();
+            setConnected(validateIPAddress());
+            timer.Enabled = connected;
         }
 
         private void listen(object sender, ElapsedEventArgs e)
         {
-            counter += 1;
-            Console.WriteLine(counter.ToString());
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    // Get the message from the ip
+                    string msg = client.DownloadString("http://" + ipAddress);
+                    msg = msg.Replace("\\x a", "");
+                    // From https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
+                    string readableMsg = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
+                    if (!string.IsNullOrEmpty(readableMsg) && readableMsg != previousMessage)
+                    {
+                        previousMessage = readableMsg;
+                        setMessage(readableMsg);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ipAddress);
+                Console.WriteLine(ex.Message);
+            }
         }
 
         #endregion
