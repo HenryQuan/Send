@@ -17,7 +17,8 @@ Sometimes, I need to send messages to my friend in Chinese when I am playing Wor
 2. SendText only refreshes every 3 seconds so there might be some delay (but usually it is fine and you won't even notice it at all)
 
 # Screenshot
-![WPF](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/screenshot.PNG)
+![The original](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/screenshot.PNG)
+![Work in progress](https://raw.githubusercontent.com/HenryQuan/SendText/master/extra/WIP.JPG)
 
 # Reference
 1. https://github.com/lopspower/AndroidWebServer
