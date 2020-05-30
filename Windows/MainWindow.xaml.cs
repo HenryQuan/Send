@@ -5,11 +5,11 @@ using System.Windows.Forms;
 namespace Send
 {
     /// <summary>
-    /// Interaction logic for SendWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SendWindow : Window
+    public partial class MainWindow : Window
     {
-        public SendWindow()
+        public MainWindow()
         {
             InitializeComponent();
             sendKeys();
