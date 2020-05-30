@@ -15,14 +15,15 @@
             <MenuItem Header="Check for update" />
         </Menu>
         <StackPanel Margin="16 8 16 16" DockPanel.Dock="Top">
-            <TextBlock TextAlignment="Center" Margin="0 0 0 8" FontSize="32" Name="statusText"/>
+            <TextBlock TextAlignment="Center" Margin="0 0 0 8" FontSize="32" 
+                Text="{Binding Path=status}" Foreground="{Binding Path=statusBrush}"/>
             <DockPanel Margin="0 0 0 8">
                 <TextBlock Text="IP Address " />
                 <TextBox Margin="8 0 0 0" Name="ipBox"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Delay: 1000ms" Margin="0 0 8 0" Name="delayText" />
-                <Slider x:Name="delaySlider" Maximum="30" Minimum="1" Value="10" ValueChanged="delaySlider_ValueChanged"/>
+                <Slider x:Name="delaySlider" Maximum="30" Minimum="1" Value="10" />
             </DockPanel>
         </StackPanel>
         <TextBox Margin="16 0 16 16"/>

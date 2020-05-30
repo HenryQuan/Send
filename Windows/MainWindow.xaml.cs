@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Send.Models;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,19 +13,16 @@ namespace Send
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// The default delay is 1s, 1000ms
-        /// </summary>
-        private int delay = 1000;
-
-        private string status = "NOT CONNECTED";
+        private MainViewModel viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            // Setup UI
-            updateStatusText();
+            viewModel = new MainViewModel();
+            DataContext = viewModel;
+
+            setupUI();
         }
     
         
@@ -46,24 +44,11 @@ namespace Send
         #region UI update
 
         /// <summary>
-        /// It can either be online or offline with green or red colour
+        /// Retrieve saved data and setup UI
         /// </summary>
-        private void updateStatusText()
+        private void setupUI()
         {
-            statusText.Text = status;
-            if (status.Equals("CONNECTED"))
-            {
-                statusText.Foreground = Brushes.DarkGreen;
-            } else
-            {
-                statusText.Foreground = Brushes.Red;
-            }
-        }
 
-        private void delaySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            delay = (int)(e.NewValue * 100);
-            delayText.Text = $"Delay: {delay}ms";
         }
 
         #endregion
