@@ -141,11 +141,6 @@ namespace Send.Models
             startListener();
         }
 
-        public void startListener()
-        {
-            updateListener(validateIPAddress());
-        }
-
         private void listen(object sender, ElapsedEventArgs e)
         {
             try
@@ -186,6 +181,11 @@ namespace Send.Models
         {
             setConnected(value);
             timer.Enabled = value;
+        }
+
+        public void startListener()
+        {
+            updateListener(validateIPAddress());
         }
 
         /// <summary>
