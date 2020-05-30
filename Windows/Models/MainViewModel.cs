@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 
 namespace Send.Models
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        #region fields
+        #region Fields with UI binding
 
         /// <summary>
         /// The default delay is 1s, 1000ms
@@ -101,13 +99,9 @@ namespace Send.Models
         /// <summary>
         /// Load data from local and prepare everything
         /// </summary>
-        public async void init()
+        public void init()
         {
-            await Task.Delay(3000);
-            setConnected(true);
-            setMessage("From ViewModel");
-            ipString = "192.168.1.1";
-            delayValue = 1;
+
         }
 
         #endregion
