@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Forms;
 
 namespace Send
 {
@@ -11,8 +10,6 @@ namespace Send
         public SendWindow()
         {
             InitializeComponent();
-
-            SendKeys.SendWait("{^c}");
         }
     }
 }
