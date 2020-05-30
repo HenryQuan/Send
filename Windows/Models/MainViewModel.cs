@@ -17,7 +17,7 @@ namespace Send.Models
         /// The default delay is 1s, 1000ms (remeber to x100 to make it ms)
         /// </summary>
         private double delay;
-        public double delayValue
+        public double DelayValue
         {
             get { return delay; }
             set
@@ -25,13 +25,13 @@ namespace Send.Models
                 delay = value;
                 Settings.Default.Delay_Value = value;
                 Settings.Default.Save();
-                onChangeMany(new string[] { "delayMessage", "delayValue" });
+                onChangeMany(new string[] { "DelayMessage", "DelayValue" });
 
                 // Update timer interval
                 timer.Interval = value * 100;
             }
         }
-        public string delayMessage
+        public string DelayMessage
         {
             get
             {
@@ -51,10 +51,10 @@ namespace Send.Models
             {
                 connected = value;
                 // The UI is using status and brush so you need to update this
-                onChangeMany(new string[] { "status", "statusBrush" });
+                onChangeMany(new string[] { "Status", "StatusBrush" });
             }
         }
-        public string status
+        public string Status
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Send.Models
                 return "NOT ACTIVE";
             }
         }
-        public Brush statusBrush
+        public Brush StatusBrush
         {
             get
             {
@@ -74,35 +74,43 @@ namespace Send.Models
         /// <summary>
         /// This is the current ip address we are using
         /// </summary>
-        private string ipAddress;
-        public string ipString
+        private string Address;
+        public string AddressString
         {
-            get { return ipAddress; }
+            get { return Address; }
             set
             {
-                ipAddress = value;
+                Address = value;
                 Settings.Default.IP_Address = value;
                 Settings.Default.Save();
-                onChange("ipString");
+                onChange("AddressString");
             }
         }
 
         /// <summary>
-        /// Current message from the mobile
+        /// Message from the server, it need to be decoded from UTF8
         /// </summary>
-        private string message = "Hello World";
+        public string Message { get; private set; } = "Hello World";
         private void setMessage(string value)
         {
-            if (message != value)
+            if (Message != value)
             {
-                message = value;
-                // The UI is using status and brush so you need to update this
-                onChange("message");
+                Message = value;
+                onChange("Message");
             }
         }
-        public string Message
+
+        /// <summary>
+        /// This is the error message from web client
+        /// </summary>
+        public string ErrorMessage { get; private set; } = "";
+        private void setErrorMessage(string value)
         {
-            get { return message; }
+            if (ErrorMessage != value)
+            {
+                ErrorMessage = value;
+                onChange("ErrorMessage");
+            }
         }
 
         #endregion
@@ -122,7 +130,7 @@ namespace Send.Models
         public MainViewModel()
         {
             // Load data from Settings
-            ipAddress = Settings.Default.IP_Address;
+            Address = Settings.Default.IP_Address;
             delay = Settings.Default.Delay_Value;
 
             // Setup timer
@@ -135,8 +143,7 @@ namespace Send.Models
 
         public void startListener()
         {
-            setConnected(validateIPAddress());
-            timer.Enabled = connected;
+            updateListener(validateIPAddress());
         }
 
         private void listen(object sender, ElapsedEventArgs e)
@@ -146,8 +153,10 @@ namespace Send.Models
                 using (var client = new WebClient())
                 {
                     // Get the message from the ip
-                    string msg = client.DownloadString("http://" + ipAddress);
+                    string msg = client.DownloadString("http://" + Address);
                     msg = msg.Replace("\\x a", "");
+                    // Clear error message if the request was successful
+                    setErrorMessage("");
                     // From https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
                     string readableMsg = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
                     if (!string.IsNullOrEmpty(readableMsg) && readableMsg != previousMessage)
@@ -159,8 +168,9 @@ namespace Send.Models
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ipAddress);
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(Address);
+                setErrorMessage(ex.Message);
+                updateListener(false);
             }
         }
 
@@ -169,15 +179,25 @@ namespace Send.Models
         #region Utils
 
         /// <summary>
+        /// Update listener state
+        /// </summary>
+        /// <param name="value"></param>
+        private void updateListener(bool value)
+        {
+            setConnected(value);
+            timer.Enabled = value;
+        }
+
+        /// <summary>
         /// Check whether the IP Address is valid
         /// </summary>
         /// <returns></returns>
         private bool validateIPAddress()
         {
             // Check if it is null
-            if (string.IsNullOrEmpty(ipAddress)) return false;
+            if (string.IsNullOrEmpty(Address)) return false;
             // IPv4 has . and iPv6 has :
-            if (ipAddress.Contains(".") || ipAddress.Contains(":")) return true;
+            if (Address.Contains(".") || Address.Contains(":")) return true;
             return false;
         }
 
