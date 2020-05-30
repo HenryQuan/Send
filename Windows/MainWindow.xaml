@@ -6,15 +6,24 @@
         xmlns:local="clr-namespace:Send"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Send" Height="305" Width="556">
-    <DockPanel Margin="16">
-        <StackPanel Margin="0 0 0 8" DockPanel.Dock="Top">
+        Title="Send" Height="310" Width="500"
+        MinHeight="200" MinWidth="300">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="About" />
+            <MenuItem Header="How to use" />
+            <MenuItem Header="Check for update" />
+        </Menu>
+        <StackPanel Margin="16" DockPanel.Dock="Top">
             <DockPanel Margin="0 0 0 8">
                 <TextBlock Text="IP Address " />
                 <TextBox Margin="8 0 0 0" />
             </DockPanel>
-            <Slider />
+            <DockPanel>
+                <TextBlock Text="Delay: 1000ms" Margin="0 0 8 0" Name="delayText" />
+                <Slider x:Name="delaySlider" Maximum="30" Minimum="1" Value="10" ValueChanged="delaySlider_ValueChanged"/>
+            </DockPanel>
         </StackPanel>
-        <TextBox DockPanel.Dock="Bottom"/>
+        <TextBox Margin="16 0 16 16"/>
     </DockPanel>
 </Window>
