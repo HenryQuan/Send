@@ -46,7 +46,7 @@ namespace Send
         /// <summary>
         /// Retrieve saved data and setup UI
         /// </summary>
-        private void setupUI()
+        private async void setupUI()
         {
 
         }
