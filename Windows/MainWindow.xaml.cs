@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Send
@@ -19,13 +20,11 @@ namespace Send
         {
             InitializeComponent();
 
+            // Setup view model
             viewModel = new MainViewModel();
+            viewModel.init();
             DataContext = viewModel;
-
-            setupUI();
         }
-    
-        
 
         private async void sendKeys()
         {
@@ -33,22 +32,14 @@ namespace Send
             SendKeys.SendWait("^(a)");
         }
 
-        #region IP related
+        #region UI events
 
-        #endregion
-
-        #region Web request
-
-        #endregion
-
-        #region UI update
-
-        /// <summary>
-        /// Retrieve saved data and setup UI
-        /// </summary>
-        private async void setupUI()
+        private void ipBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-
+            if (e.Key == Key.Return)
+            {
+                Keyboard.ClearFocus();
+            }
         }
 
         #endregion

@@ -16,16 +16,16 @@
         </Menu>
         <StackPanel Margin="16 8 16 16" DockPanel.Dock="Top">
             <TextBlock TextAlignment="Center" Margin="0 0 0 8" FontSize="32" 
-                Text="{Binding Path=status}" Foreground="{Binding Path=statusBrush}"/>
+                Text="{Binding Path=status, Mode=OneWay}" Foreground="{Binding Path=statusBrush, Mode=OneWay}"/>
             <DockPanel Margin="0 0 0 8">
                 <TextBlock Text="IP Address " />
-                <TextBox Margin="8 0 0 0" Name="ipBox"/>
+                <TextBox Margin="8 0 0 0" Name="ipBox" KeyDown="ipBox_KeyDown" Text="{Binding Path=ipString, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
-                <TextBlock Text="Delay: 1000ms" Margin="0 0 8 0" Name="delayText" />
-                <Slider x:Name="delaySlider" Maximum="30" Minimum="1" Value="10" />
+                <TextBlock Text="{Binding Path=delayMessage}" Margin="0 0 8 0" Name="delayText" />
+                <Slider x:Name="delaySlider" Maximum="30" Minimum="1" Value="{Binding Path=delayValue, UpdateSourceTrigger=PropertyChanged}" />
             </DockPanel>
         </StackPanel>
-        <TextBox Margin="16 0 16 16"/>
+        <TextBox Margin="16 0 16 16" Text="{Binding Path=Message, Mode=OneWay}"/>
     </DockPanel>
 </Window>
