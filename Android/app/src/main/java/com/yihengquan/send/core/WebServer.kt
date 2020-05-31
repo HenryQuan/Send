@@ -4,9 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import fi.iki.elonen.NanoHTTPD
-import java.io.BufferedReader
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
 
 
@@ -30,6 +28,9 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
         // If message doesn't include "content://com", try it like a string
         if (message.contains("content://com")) {
             val stream: InputStream? = context.contentResolver.openInputStream(Uri.parse(message))
+
+            // TODO: get an estimate of the file size here
+
             val res = newChunkedResponse(
                 Response.Status.OK,
                 getContentType(message),

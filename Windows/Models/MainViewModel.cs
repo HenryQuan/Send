@@ -8,6 +8,7 @@ using System.Timers;
 using System.Windows.Media;
 using System.Linq;
 using System.Diagnostics;
+using System.Net;
 
 namespace Send.Models
 {
@@ -142,7 +143,7 @@ namespace Send.Models
             delay = Settings.Default.Delay_Value;
 
             // Setup timeout
-            client.Timeout = TimeSpan.FromSeconds(2);
+            client.Timeout = TimeSpan.FromSeconds(5);
 
             // Setup timer
             timer.Elapsed += new ElapsedEventHandler(listen);
