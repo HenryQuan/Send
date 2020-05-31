@@ -28,15 +28,28 @@ namespace Send
             SendKeys.SendWait("^(a)");
         }
 
+        /// <summary>
+        /// Ask view model to connect to the server
+        /// </summary>
+        private void startListener()
+        {
+            Keyboard.ClearFocus();
+            viewModel.startListener();
+        }
+
         #region UI events
 
         private void ipBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                Keyboard.ClearFocus();
-                viewModel.startListener();
+                startListener();
             }
+        }
+
+        private void connectButton_Click(object sender, RoutedEventArgs e)
+        {
+            startListener();
         }
 
         #endregion

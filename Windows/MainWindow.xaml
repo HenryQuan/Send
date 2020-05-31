@@ -22,8 +22,12 @@
                     VerticalAlignment="Center" Foreground="Red"/>
             </DockPanel>
             <DockPanel Margin="0 0 0 8">
-                <TextBlock Text="IP Address " />
-                <TextBox Margin="8 0 0 0" KeyDown="ipBox_KeyDown" Text="{Binding Path=AddressString, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="IP Address "/>
+                <Button Name="connectButton" Width="64" DockPanel.Dock="Right" Click="connectButton_Click">
+                    <TextBlock Text="Connect"/>
+                </Button>
+                <TextBox Margin="8 0 8 0" KeyDown="ipBox_KeyDown"
+                    Text="{Binding Path=AddressString, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="{Binding Path=DelayMessage}" Margin="0 0 8 0" Name="delayText" />

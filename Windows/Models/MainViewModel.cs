@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Media;
 
@@ -90,7 +91,7 @@ namespace Send.Models
         /// <summary>
         /// Message from the server, it need to be decoded from UTF8
         /// </summary>
-        public string Message { get; private set; } = "Hello World";
+        public string Message { get; private set; } = "";
         private void setMessage(string value)
         {
             if (Message != value)
@@ -143,6 +144,18 @@ namespace Send.Models
 
         private void listen(object sender, ElapsedEventArgs e)
         {
+            request();
+        }
+
+        #endregion
+
+        #region Utils
+
+        /// <summary>
+        /// The actually request
+        /// </summary>
+        private void request()
+        {
             try
             {
                 using (var client = new WebClient())
@@ -154,7 +167,7 @@ namespace Send.Models
                     setErrorMessage("");
                     // From https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
                     string readableMsg = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
-                    if (!string.IsNullOrEmpty(readableMsg) && readableMsg != previousMessage)
+                    if (readableMsg != previousMessage)
                     {
                         previousMessage = readableMsg;
                         setMessage(readableMsg);
@@ -169,10 +182,6 @@ namespace Send.Models
             }
         }
 
-        #endregion
-
-        #region Utils
-
         /// <summary>
         /// Update listener state
         /// </summary>
@@ -181,10 +190,19 @@ namespace Send.Models
         {
             setConnected(value);
             timer.Enabled = value;
+
+            if (value == true)
+            {
+                request();
+            }
         }
 
+        /// <summary>
+        /// Call update listener and check if IP is valid only if the listsner is not active
+        /// </summary>
         public void startListener()
         {
+            if (connected) return;
             updateListener(validateIPAddress());
         }
 
