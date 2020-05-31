@@ -1,12 +1,8 @@
 package com.yihengquan.send.ui.home
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
