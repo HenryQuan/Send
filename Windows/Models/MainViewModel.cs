@@ -141,6 +141,9 @@ namespace Send.Models
             Address = Settings.Default.IP_Address;
             delay = Settings.Default.Delay_Value;
 
+            // Setup timeout
+            client.Timeout = TimeSpan.FromSeconds(2);
+
             // Setup timer
             timer.Elapsed += new ElapsedEventHandler(listen);
             // Update timer interval
@@ -177,6 +180,18 @@ namespace Send.Models
                 if (content.Contains("image"))
                 {
                     setMessage("This is an IMAGE.\nPlease click 'Open browser' in the menu to view it.");
+                }
+                else if (content.Contains("audio"))
+                {
+                    setMessage("This is an AUDIO.\nPlease click 'Open browser' in the menu to listen to it.");
+                }
+                else if (content.Contains("video"))
+                {
+                    setMessage("This is a VIDEO.\nPlease click 'Open browser' in the menu to view it.");
+                }
+                else if (content.Contains("application"))
+                {
+                    setMessage("This is a FILE.\nPlease click 'Open browser' in the menu to download it.");
                 }
                 else
                 {

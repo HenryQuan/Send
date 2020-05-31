@@ -27,39 +27,53 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
     }
 
     override fun serve(session: IHTTPSession): Response {
-        // Message can be
-
-
-
-        var encode = ""
-
-        try {
-//            if (message != "") {
-//                // Working utf-8 encoding
-//                val kanji = message.toByteArray(charset("UTF-8"))
-//                for (b in kanji) {
-//                    encode += String.format("\\x%2x", b)
-//                }
-//            }
+        // If message doesn't include "content://com", try it like a string
+        if (message.contains("content://com")) {
             val stream: InputStream? = context.contentResolver.openInputStream(Uri.parse(message))
             val res = newChunkedResponse(
                 Response.Status.OK,
-                "",
+                getContentType(message),
                 stream
             )
 
-            return res
-//            encode = reader.readText()
-            Log.i("WebServer", encode)
-        } catch (e: UnsupportedEncodingException) {
-            Log.i("WebServer", "Encoding is not supported")
-            e.printStackTrace()
-        }
+            if (message.contains("raw%3A")) {
+                // Only add this for raw files
+                res.addHeader("Content-Disposition", getFileName(message))
+            }
 
-        val res = newFixedLengthResponse(encode)
-        res.addHeader("Content-Type", "image/png image/jpeg")
-        return res
+            return res
+        } else {
+            var encode = ""
+            try {
+                if (message != "") {
+                    // Working utf-8 encoding
+                    val kanji = message.toByteArray(charset("UTF-8"))
+                    for (b in kanji) {
+                        encode += String.format("\\x%2x", b)
+                    }
+                }
+                Log.i("WebServer", encode)
+            } catch (e: UnsupportedEncodingException) {
+                Log.i("WebServer", "Encoding is not supported")
+                e.printStackTrace()
+            }
+
+            return newFixedLengthResponse(encode)
+        }
     }
 
+    private fun getFileName(uri: String): String {
+        return "attachment; filename=\"" + uri.split("%2F").last() + "\""
+    }
+
+    private fun getContentType(uri: String): String {
+        return when {
+            uri.contains("image%3A") -> "image/png img/jpeg img/gif"
+            uri.contains("video%3A") -> "video/mp4 video/quicktime video/webm video/mpeg"
+            uri.contains("audio%3A") -> "audio/mpeg audio/x-wav "
+            uri.contains("raw%3A") -> "application/octet-stream"
+            else -> ""
+        }
+    }
 
 }
