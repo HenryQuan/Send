@@ -1,13 +1,19 @@
 package com.yihengquan.send.core
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import fi.iki.elonen.NanoHTTPD
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
+
 
 /**
  * A simple webserver class that handles responses, now only supports a text message
  */
-class WebServer(port: Int) : NanoHTTPD(port) {
+class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
     private var _message: String
     var message: String
         get() = _message
@@ -20,23 +26,37 @@ class WebServer(port: Int) : NanoHTTPD(port) {
         _message = ""
     }
 
+
+
     override fun serve(session: IHTTPSession): Response {
         var encode = ""
 
         try {
-            if (message != "") {
-                // Working utf-8 encoding
-                val kanji = message.toByteArray(charset("UTF-8"))
-                for (b in kanji) {
-                    encode += String.format("\\x%2x", b)
-                }
-            }
+//            if (message != "") {
+//                // Working utf-8 encoding
+//                val kanji = message.toByteArray(charset("UTF-8"))
+//                for (b in kanji) {
+//                    encode += String.format("\\x%2x", b)
+//                }
+//            }
+            val stream: InputStream? = context.contentResolver.openInputStream(Uri.parse("content://com.android.providers.media.documents/document/image%3A49124"))
+            val res = newChunkedResponse(
+                Response.Status.OK,
+                "image/png image/jpeg",
+                stream
+            )
+
+            return res
+//            encode = reader.readText()
+            Log.i("WebServer", encode)
         } catch (e: UnsupportedEncodingException) {
             Log.i("WebServer", "Encoding is not supported")
             e.printStackTrace()
         }
 
-        return newFixedLengthResponse(encode)
+        val res = newFixedLengthResponse(encode)
+        res.addHeader("Content-Type", "image/png image/jpeg")
+        return res
     }
 
 }

@@ -15,29 +15,29 @@ import java.net.UnknownHostException
 class HomeViewModel : ViewModel() {
 
     private val port = 9587
-    private var server: WebServer
+    private var server: WebServer? = null
 
     private val _address = MutableLiveData<String>()
     val address: LiveData<String> = _address
 
-    init {
-        server = WebServer(port)
+    override fun onCleared() {
+        super.onCleared()
+        server?.stop()
+    }
+
+    fun setupServer(context: Context?) {
+        server = context?.let { WebServer(port, it) }
         try {
             // Start server
-            server.start(2000)
+            server?.start(2000)
         } catch (e: IOException) {
             e.printStackTrace()
             Log.i("HomeViewModel", "Timeout or server is already running")
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        server.stop()
-    }
-
     fun setMessage(msg: Editable) {
-        server.message = msg.toString()
+        server?.message = msg.toString()
     }
 
     fun setIPAddress(context: Context?) {
