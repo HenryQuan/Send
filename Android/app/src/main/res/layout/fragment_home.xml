@@ -33,8 +33,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             app:layout_constraintTop_toBottomOf="@+id/myAddressView" />
+
+        <Button
+            android:id="@+id/sendFileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/file"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sendImageButton"
+            app:layout_constraintEnd_toStartOf="@+id/sendImageButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/sendImageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sendShortcutButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sendFileButton" />
+
+        <Button
+            android:id="@+id/sendShortcutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/shortcut"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sendImageButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sendImageButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

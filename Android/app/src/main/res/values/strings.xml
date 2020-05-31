@@ -2,4 +2,7 @@
     <string name="app_name">Send</string>
     <string name="ip_address">- IP Address -</string>
     <string name="unknown">UNKNOWN</string>
+    <string name="file">File</string>
+    <string name="image">Image</string>
+    <string name="shortcut">Shortcut</string>
 </resources>
