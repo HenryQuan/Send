@@ -2,19 +2,43 @@ package com.yihengquan.send.ui.home
 
 import android.content.Context
 import android.net.wifi.WifiManager
+import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yihengquan.send.core.WebServer
+import java.io.IOException
 import java.net.InetAddress
 import java.net.UnknownHostException
 
 class HomeViewModel : ViewModel() {
 
-    private val port = "9587"
+    private val port = 9587
+    private var server: WebServer
 
     private val _address = MutableLiveData<String>()
     val address: LiveData<String> = _address
+
+    init {
+        server = WebServer(port)
+        try {
+            // Start server
+            server.start(2000)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.i("HomeViewModel", "Timeout or server is already running")
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        server.stop()
+    }
+
+    fun setMessage(msg: Editable) {
+        server.message = msg.toString()
+    }
 
     fun setIPAddress(context: Context?) {
         context ?: return

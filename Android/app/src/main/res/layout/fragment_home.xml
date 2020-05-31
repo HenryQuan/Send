@@ -28,5 +28,13 @@
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/addressTextView" />
 
+        <EditText
+            android:id="@+id/messageBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:inputType="textPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/myAddressView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
