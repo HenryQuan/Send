@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Send</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="ip_address">- IP Address -</string>
+    <string name="unknown">UNKNOWN</string>
 </resources>

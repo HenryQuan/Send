@@ -6,7 +6,7 @@ android {
     compileSdkVersion 29
 
     buildFeatures {
-        viewBinding true
+        dataBinding true
     }
 
     defaultConfig {
