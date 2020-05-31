@@ -1,12 +1,13 @@
 ﻿using Send.Properties;
 using System;
 using System.ComponentModel;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Net.Http;
 using System.Timers;
 using System.Windows.Media;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Send.Models
 {
@@ -55,6 +56,7 @@ namespace Send.Models
                 onChangeMany(new string[] { "Status", "StatusBrush" });
             }
         }
+
         public string Status
         {
             get
@@ -126,6 +128,11 @@ namespace Send.Models
         /// </summary>
         private string previousMessage = "";
 
+        /// <summary>
+        /// This is a better web client for requesting data
+        /// </summary>
+        private readonly HttpClient client = new HttpClient();
+
         #region Functions
 
         public MainViewModel()
@@ -142,6 +149,11 @@ namespace Send.Models
             startListener();
         }
 
+        public void openBrowser()
+        {
+            Process.Start("http://" + Address);
+        }
+
         private void listen(object sender, ElapsedEventArgs e)
         {
             request();
@@ -154,17 +166,23 @@ namespace Send.Models
         /// <summary>
         /// The actually request
         /// </summary>
-        private void request()
+        private async void request()
         {
             try
             {
-                using (var client = new WebClient())
+                var response = await client.GetAsync("http://" + Address);
+                response.EnsureSuccessStatusCode();
+
+                var content = response.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                if (content.Contains("image"))
                 {
+                    setMessage("This is an IMAGE.\nPlease click 'Open browser' in the menu to view it.");
+                }
+                else
+                {
+                    string msg = await response.Content.ReadAsStringAsync();
                     // Get the message from the ip
-                    string msg = client.DownloadString("http://" + Address);
                     msg = msg.Replace("\\x a", "");
-                    // Clear error message if the request was successful
-                    setErrorMessage("");
                     // From https://stackoverflow.com/questions/22468026/how-should-i-decode-a-utf-8-string
                     string readableMsg = Encoding.UTF8.GetString(Array.ConvertAll(Regex.Unescape(msg).ToCharArray(), c => (byte)c));
                     if (readableMsg != previousMessage)
@@ -173,6 +191,9 @@ namespace Send.Models
                         setMessage(readableMsg);
                     }
                 }
+
+                // Clear error message if the request was successful
+                setErrorMessage("");
             }
             catch (Exception ex)
             {

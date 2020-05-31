@@ -13,13 +13,14 @@
             <MenuItem Header="About" />
             <MenuItem Header="How to use" />
             <MenuItem Header="Check for update" />
+            <MenuItem Header="Open browser" Name="openBrowserItem" Click="openBrowserItem_Click"/>
         </Menu>
         <StackPanel Margin="16 8 16 16" DockPanel.Dock="Top">
             <DockPanel>
                 <TextBlock TextAlignment="Left" Margin="0 0 0 8" FontSize="32" DockPanel.Dock="Left"
                     Text="{Binding Path=Status, Mode=OneWay}" Foreground="{Binding Path=StatusBrush, Mode=OneWay}"/>
                 <TextBlock DockPanel.Dock="Right" Margin="8 0 0 0" Text="{Binding Path=ErrorMessage, Mode=OneWay}" 
-                    VerticalAlignment="Center" Foreground="Red"/>
+                    MaxHeight="64" VerticalAlignment="Center" Foreground="Red"/>
             </DockPanel>
             <DockPanel Margin="0 0 0 8">
                 <TextBlock Text="IP Address "/>

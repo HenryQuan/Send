@@ -52,6 +52,11 @@ namespace Send
             startListener();
         }
 
+        private void openBrowserItem_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.openBrowser();
+        }
+
         #endregion
     }
 }

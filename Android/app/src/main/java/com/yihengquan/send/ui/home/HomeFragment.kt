@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         var binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             // Show keyboard automatically
             if (messageBox.requestFocus()) {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED)
                 messageBox.addTextChangedListener {
                     homeViewModel.setMessage(messageBox.text)
                 }
@@ -67,6 +67,9 @@ class HomeFragment : Fragment() {
         if (takeFlags != null) {
             context?.contentResolver?.takePersistableUriPermission(Uri.parse(data.dataString), takeFlags)
         }
-        Log.i("HomeFragment", data?.dataString.toString())
+
+        val contentString = data?.dataString;
+        contentString?.let { homeViewModel.setMessage(it) }
+        Log.i("HomeFragment", contentString.toString())
     }
 }

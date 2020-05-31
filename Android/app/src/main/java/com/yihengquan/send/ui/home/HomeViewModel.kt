@@ -40,6 +40,10 @@ class HomeViewModel : ViewModel() {
         server?.message = msg.toString()
     }
 
+    fun setMessage(msg: String) {
+        server?.message = msg
+    }
+
     fun setIPAddress(context: Context?) {
         context ?: return
         val wm = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?

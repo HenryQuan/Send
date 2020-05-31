@@ -26,8 +26,6 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
         _message = ""
     }
 
-
-
     override fun serve(session: IHTTPSession): Response {
         var encode = ""
 
@@ -39,10 +37,10 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
 //                    encode += String.format("\\x%2x", b)
 //                }
 //            }
-            val stream: InputStream? = context.contentResolver.openInputStream(Uri.parse("content://com.android.providers.media.documents/document/image%3A49124"))
+            val stream: InputStream? = context.contentResolver.openInputStream(Uri.parse(message))
             val res = newChunkedResponse(
                 Response.Status.OK,
-                "image/png image/jpeg",
+                "",
                 stream
             )
 
