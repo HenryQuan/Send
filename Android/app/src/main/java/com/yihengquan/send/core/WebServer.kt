@@ -27,6 +27,10 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
     }
 
     override fun serve(session: IHTTPSession): Response {
+        // Message can be
+
+
+
         var encode = ""
 
         try {
@@ -56,5 +60,6 @@ class WebServer(port: Int, private val context: Context) : NanoHTTPD(port) {
         res.addHeader("Content-Type", "image/png image/jpeg")
         return res
     }
+
 
 }

@@ -53,12 +53,11 @@
             android:id="@+id/sendImageButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:text="@string/image"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendShortcutButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/sendFileButton" />
+            app:layout_constraintStart_toEndOf="@+id/sendFileButton"
+            app:layout_constraintTop_toBottomOf="@+id/messageBox" />
 
         <Button
             android:id="@+id/sendShortcutButton"

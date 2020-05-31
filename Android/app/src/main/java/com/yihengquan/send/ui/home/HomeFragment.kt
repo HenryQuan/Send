@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         var binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             // Show keyboard automatically
             if (messageBox.requestFocus()) {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED)
+                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 messageBox.addTextChangedListener {
                     homeViewModel.setMessage(messageBox.text)
                 }
